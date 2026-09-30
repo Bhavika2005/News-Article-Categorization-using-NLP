@@ -187,4 +187,10 @@ The web interface provides:
 
 Here are some screenshots of the News Article Categorization using NLP :
 
-"C:\Users\bhavi\OneDrive\Pictures\Screenshots\Screenshot 2026-09-30 212052.png"
+### 1.Upload PDF
+![Interface](Interface.png)
+
+### 2. After Uploading an Article
+![after uploading image](after_uploading_image.png)
+
+![3.](3.png)
