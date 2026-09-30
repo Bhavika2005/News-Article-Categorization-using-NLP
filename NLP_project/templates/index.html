@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewsLens AI | Multi-File News Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div class="page-shell">
+
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-icon">✦</div>
+        <div>
+            <div class="brand-name">NewsLens <span>AI</span></div>
+            <div class="brand-subtitle">MULTI-FORMAT NEWS INTELLIGENCE</div>
+        </div>
+    </div>
+
+    <div class="model-pill">
+        <span class="pulse"></span>
+        TF-IDF · Logistic Regression
+    </div>
+</header>
+
+<main>
+
+<section class="hero">
+    <div>
+        <div class="eyebrow">INTELLIGENT DOCUMENT ANALYSIS</div>
+        <h1>Upload any supported<br><span>news file.</span></h1>
+        <p>
+            Analyze PDF, Word, CSV, Excel, JSON, TXT or ZIP files.
+            The system extracts readable text automatically and classifies
+            the news article using your trained NLP model.
+        </p>
+    </div>
+
+    <div class="hero-stat">
+        <div class="stat-number">7</div>
+        <div class="stat-label">File Formats</div>
+        <div class="stat-mini">Up to 50 MB</div>
+    </div>
+</section>
+
+<section class="workspace">
+
+<div class="input-card card">
+
+    <div class="card-heading">
+        <div>
+            <div class="section-label">DOCUMENT ANALYZER</div>
+            <h2>Upload your news file</h2>
+        </div>
+    </div>
+
+    <div id="dropZone" class="drop-zone">
+
+        <div class="upload-icon">↑</div>
+
+        <h3>Drag & drop your file here</h3>
+
+        <p>or choose a file from your computer</p>
+
+        <label class="browse-btn">
+            Browse Files
+            <input id="fileInput" type="file"
+                   accept=".pdf,.txt,.csv,.json,.docx,.xlsx,.zip"
+                   hidden>
+        </label>
+
+        <div class="file-types">
+            <span>PDF</span>
+            <span>DOCX</span>
+            <span>CSV</span>
+            <span>XLSX</span>
+            <span>JSON</span>
+            <span>TXT</span>
+            <span>ZIP</span>
+        </div>
+
+        <div class="file-hint">
+            Maximum 50 MB · Text-based documents recommended
+        </div>
+
+    </div>
+
+    <div id="fileInfo" class="file-info hidden">
+        <div class="file-icon" id="fileIcon">FILE</div>
+
+        <div class="file-details">
+            <strong id="fileName">article.pdf</strong>
+            <span id="fileSize">0 KB</span>
+        </div>
+
+        <button onclick="removeFile()" class="remove-btn">×</button>
+    </div>
+
+    <button id="classifyBtn"
+            class="classify-btn"
+            onclick="analyzeFile()"
+            disabled>
+        <span>✦</span>
+        Analyze File
+        <span class="arrow">→</span>
+    </button>
+
+    <div id="statusText" class="status-text"></div>
+
+</div>
+
+<div class="result-card card" id="emptyState">
+
+    <div class="empty-icon">◎</div>
+
+    <h2>Your analysis will appear here</h2>
+
+    <p>
+        Upload a supported file and click
+        <strong>Analyze File</strong> to see
+        the predicted news category and NLP insights.
+    </p>
+
+    <div class="category-preview">
+        <span>⚽ Sport</span>
+        <span>💼 Business</span>
+        <span>🏛 Politics</span>
+        <span>💻 Tech</span>
+        <span>🎬 Entertainment</span>
+    </div>
+
+</div>
+
+<div class="result-card card hidden" id="resultState">
+
+    <div class="result-top">
+
+        <div>
+            <div class="section-label">PREDICTION RESULT</div>
+
+            <div class="prediction-row">
+
+                <div id="categoryIcon" class="category-icon">✦</div>
+
+                <div>
+                    <h2 id="categoryName">Tech</h2>
+                    <span id="confidenceLevel"
+                          class="confidence-badge">
+                        High confidence
+                    </span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="confidence-box">
+            <div id="confidenceValue">0%</div>
+            <span>confidence</span>
+        </div>
+
+    </div>
+
+    <div class="confidence-track">
+        <div id="confidenceBar" class="confidence-fill"></div>
+    </div>
+
+    <div class="file-result">
+        <span id="resultFileIcon">FILE</span>
+        <div>
+            <strong id="resultFileName">article.pdf</strong>
+            <small id="resultFileType">PDF</small>
+        </div>
+    </div>
+
+    <div class="insights-grid">
+
+        <div class="mini-card">
+            <span class="mini-icon">📄</span>
+            <div>
+                <strong id="pageCount">0</strong>
+                <small>Pages / items</small>
+            </div>
+        </div>
+
+        <div class="mini-card">
+            <span class="mini-icon">📝</span>
+            <div>
+                <strong id="wordCount">0</strong>
+                <small>Words</small>
+            </div>
+        </div>
+
+        <div class="mini-card">
+            <span class="mini-icon">⏱</span>
+            <div>
+                <strong id="readingTime">0 min</strong>
+                <small>Reading time</small>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="two-column">
+
+        <div class="panel">
+
+            <div class="panel-title">
+                <span>Probability distribution</span>
+                <span class="tiny-label">MODEL OUTPUT</span>
+            </div>
+
+            <div id="probabilities"></div>
+
+        </div>
+
+        <div class="panel">
+
+            <div class="panel-title">
+                <span>Important terms</span>
+                <span class="tiny-label">TF-IDF</span>
+            </div>
+
+            <div id="keywords" class="keywords"></div>
+
+        </div>
+
+    </div>
+
+    <div class="extracted-panel">
+
+        <div class="panel-title">
+            <span>Extracted text preview</span>
+            <span class="tiny-label">TEXT EXTRACTION</span>
+        </div>
+
+        <div id="extractedText" class="extracted-text"></div>
+
+    </div>
+
+    <div id="ignoredBox" class="ignored-box hidden"></div>
+
+    <div class="method-note">
+        <span>ⓘ</span>
+
+        <div>
+            <strong>How this prediction works</strong>
+
+            <p>
+                File detection → text extraction → NLP preprocessing
+                → TF-IDF vectorization → Logistic Regression classification.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+</section>
+
+
+
+
+
+</main>
+
+<footer>
+    <span>NewsLens AI</span>
+    <span>•</span>
+    <span>Multi-Format Extraction + NLP + TF-IDF + ML</span>
+</footer>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
