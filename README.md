@@ -191,6 +191,6 @@ Here are some screenshots of the News Article Categorization using NLP :
 ![Interface](Interface.png)
 
 ### 2. After Uploading an Article
-![after uploading image](after_uploading_image.png)
+![after_uploading_image](after_uploading_pdf.png)
 
-![3.](3.png)
+![2nd](2nd.png)
