@@ -7,21 +7,23 @@ The system extracts text from the uploaded file, performs NLP preprocessing, con
 # How to Run the Project
 ### 📋 Prerequisites: 
 
-     1. Python 3.x
+1. Python 3.x
      
-     2. VS Code
+2. VS Code
      
-     3. A web browser such as Google Chrome / Edge / Firefox
+3. A web browser such as Google Chrome / Edge / Firefox
      
-     4. Required Python libraries: Flask
-                                   Pandas
-                                   NumPy
-                                   Scikit-learn
-                                   NLTK
-                                   Joblib
-                                   PyPDF
-                                   Python-docx
-                                   OpenPyXL
+4. Required Python libraries:
+   
+              Flask
+              Pandas
+              NumPy
+              Scikit-learn
+              NLTK
+              Joblib
+              PyPDF
+              Python-docx
+              OpenPyXL
 
 ##
 ### 🚀 Steps to Run:
@@ -183,7 +185,7 @@ The web interface provides:
     2️. Python 3.x
     3️. Web Browser
 
-## User Interface
+## 🖥️User Interface
 
 Here are some screenshots of the News Article Categorization using NLP :
 
