@@ -183,4 +183,8 @@ The web interface provides:
     2️. Python 3.x
     3️. Web Browser
 
-###
+## User Interface
+
+Here are some screenshots of the News Article Categorization using NLP :
+
+"C:\Users\bhavi\OneDrive\Pictures\Screenshots\Screenshot 2026-09-30 212052.png"
